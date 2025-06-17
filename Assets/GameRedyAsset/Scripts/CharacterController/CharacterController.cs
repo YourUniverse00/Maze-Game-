@@ -7,14 +7,27 @@ public class CharacterController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _speed;
 
+    private float _startspeed;
+
     void Awake()
     {
+        _startspeed += _speed;
         _playerRigidyBody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
         PlayerAddForce();
+    }
+
+    public void SetMovmentSpeed(float newspeed)
+    {
+        _speed += newspeed;
+        Invoke(nameof(ResetMovmentSpeed),5f);
+    }
+    public void ResetMovmentSpeed()
+    {
+        _speed = _startspeed;
     }
 
     private void PlayerAddForce()
