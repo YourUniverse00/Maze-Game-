@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class DragBoostMinus : MonoBehaviour,IBoostController
+public class DragBoostMinus : MonoBehaviour, IBoostController
 {
+    [Header("Referances")]
+    [SerializeField] private CharacterController _characterController;
     public void IBoostMethod()
     {
-        //DragMinus Bost yazılacak
-        Debug.Log("DragMinus Boost alındı");
+        //Bu method Karakterin Drag özeliği sıfıra çeker 5 saniye sonra eski değerine döndürür 
+        DragBoost();
         Destroy(this.gameObject);
-     
-     }
+    }
+     public void DragBoost()
+    {
+        _characterController.SetdragMinus();
+    }
 }

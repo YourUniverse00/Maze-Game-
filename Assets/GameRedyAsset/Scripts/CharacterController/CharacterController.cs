@@ -14,22 +14,10 @@ public class CharacterController : MonoBehaviour
         _startspeed += _speed;
         _playerRigidyBody = GetComponent<Rigidbody>();
     }
-
     void FixedUpdate()
     {
         PlayerAddForce();
     }
-
-    public void SetMovmentSpeed(float newspeed)
-    {
-        _speed += newspeed;
-        Invoke(nameof(ResetMovmentSpeed),5f);
-    }
-    public void ResetMovmentSpeed()
-    {
-        _speed = _startspeed;
-    }
-
     private void PlayerAddForce()
     {
         float input_x = Input.GetAxis("Horizontal");
@@ -38,4 +26,37 @@ public class CharacterController : MonoBehaviour
 
         _playerRigidyBody.AddForce(_playeraddforce * _speed, ForceMode.Force);
     }
+
+
+    //Boosterların çalışması için destek methodlar 
+
+    public void SetdragMinus()
+    {
+        _playerRigidyBody.linearDamping = 0f;
+        Invoke(nameof(RespawnDragMinus),5F);
+    }
+    public void RespawnDragMinus()
+    {
+        _playerRigidyBody.linearDamping = 2f;
+    }
+
+    public void SetdragPlus()
+    {
+        _playerRigidyBody.linearDamping = 10f;
+        Invoke(nameof(RespawnDragPlus), 5f);
+    }
+    public void RespawnDragPlus()
+    {
+        _playerRigidyBody.linearDamping = 2f;
+    }
+     public void SetMovmentSpeed(float newspeed)
+    {
+        _speed += newspeed;
+        Invoke(nameof(ResetMovmentSpeed), 5f);
+    }
+    public void ResetMovmentSpeed()
+    {
+        _speed = _startspeed;
+    }
+
 }
