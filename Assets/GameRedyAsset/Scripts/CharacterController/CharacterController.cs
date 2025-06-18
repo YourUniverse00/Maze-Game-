@@ -1,18 +1,24 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
     [Header("Referances")]
     [SerializeField] private Rigidbody _playerRigidyBody;
+    [SerializeField] private CameraFollow _cameraFollow;
     [Header("Settings")]
     [SerializeField] private float _speed;
 
     private float _startspeed;
 
+    private Vector3 _offsetvector;
+
     void Awake()
     {
-        _startspeed += _speed;
+    _offsetvector = _cameraFollow.offset;
+        _startspeed = _speed;
         _playerRigidyBody = GetComponent<Rigidbody>();
+
     }
     void FixedUpdate()
     {
@@ -33,7 +39,7 @@ public class CharacterController : MonoBehaviour
     public void SetdragMinus()
     {
         _playerRigidyBody.linearDamping = 0f;
-        Invoke(nameof(RespawnDragMinus),5F);
+        Invoke(nameof(RespawnDragMinus), 5F);
     }
     public void RespawnDragMinus()
     {
@@ -49,14 +55,30 @@ public class CharacterController : MonoBehaviour
     {
         _playerRigidyBody.linearDamping = 2f;
     }
-     public void SetMovmentSpeed(float newspeed)
+    public void SetMovmentSpeed(float newspeed)
     {
         _speed += newspeed;
+        StartCoroutine(ChangeOffsetSmoothly(new Vector3(_offsetvector.x, 4.28f, -3.96f), 0.8f));
         Invoke(nameof(ResetMovmentSpeed), 5f);
     }
     public void ResetMovmentSpeed()
     {
+        StartCoroutine(ChangeOffsetSmoothly(_offsetvector, 1f));
         _speed = _startspeed;
+    }
+        private IEnumerator ChangeOffsetSmoothly(Vector3 targetOffset, float duration)
+    {
+        Vector3 startOffset = _cameraFollow.offset;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            _cameraFollow.offset = Vector3.Lerp(startOffset, targetOffset, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _cameraFollow.offset = targetOffset;
     }
 
 }
