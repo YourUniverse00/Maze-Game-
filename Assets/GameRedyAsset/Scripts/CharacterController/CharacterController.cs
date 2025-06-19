@@ -10,11 +10,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _speed;
 
     private float _startspeed;
+    public bool _ongamewinlose;
 
     private Vector3 _offsetvector;
 
     void Awake()
     {
+        _ongamewinlose = true;
     _offsetvector = _cameraFollow.offset;
         _startspeed = _speed;
         _playerRigidyBody = GetComponent<Rigidbody>();
@@ -26,6 +28,7 @@ public class CharacterController : MonoBehaviour
     }
     private void PlayerAddForce()
     {
+        if(!_ongamewinlose){ return;}
         float input_x = Input.GetAxis("Horizontal");
         float input_y = Input.GetAxis("Vertical");
         Vector3 _playeraddforce = new Vector3(input_x, 0f, input_y).normalized;
@@ -63,7 +66,7 @@ public class CharacterController : MonoBehaviour
     }
     public void ResetMovmentSpeed()
     {
-        StartCoroutine(ChangeOffsetSmoothly(_offsetvector, 1f));
+        StartCoroutine(ChangeOffsetSmoothly(_offsetvector, 0.8f));
         _speed = _startspeed;
     }
         private IEnumerator ChangeOffsetSmoothly(Vector3 targetOffset, float duration)

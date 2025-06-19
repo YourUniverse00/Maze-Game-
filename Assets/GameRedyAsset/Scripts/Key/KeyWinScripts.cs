@@ -3,7 +3,8 @@ using UnityEngine;
 public class KeyWinScripts : MonoBehaviour
 {
     [Header("Referances")]
-    [SerializeField] private WinLoseUI _winLoseUI;
+    [SerializeField] private GameObject _door;
+    
     private int _keynumber;
     public bool _keybool = true;
 
@@ -15,7 +16,7 @@ public class KeyWinScripts : MonoBehaviour
             if (_keynumber >= 4)
             {
                 //Win Method
-                _winLoseUI.OnGameWin();
+                _door.SetActive(false);
                 _keybool = false;
             }
 

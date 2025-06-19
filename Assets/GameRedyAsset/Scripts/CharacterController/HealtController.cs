@@ -29,8 +29,13 @@ public class HealtController : MonoBehaviour
     {
         if (_sethealtbool_2)
         {
-            healt++;
-            if (healt <= 0)
+            if (healt <= 2)
+            {
+                healt++;
+                _sethealtbool_2 = true;
+            }
+
+            else
             {
                 _sethealtbool_2 = false;
             }
