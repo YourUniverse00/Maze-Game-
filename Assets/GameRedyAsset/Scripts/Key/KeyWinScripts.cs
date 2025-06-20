@@ -4,6 +4,7 @@ public class KeyWinScripts : MonoBehaviour
 {
     [Header("Referances")]
     [SerializeField] private GameObject _door;
+    [SerializeField] private KeyUI _keyUI;
     
     private int _keynumber;
     public bool _keybool = true;
@@ -13,6 +14,7 @@ public class KeyWinScripts : MonoBehaviour
         if (_keybool)
         {
             _keynumber++;
+            _keyUI.KeyGetThe();
             if (_keynumber >= 4)
             {
                 //Win Method

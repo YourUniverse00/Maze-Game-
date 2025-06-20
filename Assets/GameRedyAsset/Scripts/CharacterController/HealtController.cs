@@ -4,6 +4,7 @@ public class HealtController : MonoBehaviour
 {
     [Header("Referances")]
     [SerializeField] private WinLoseUI _winLoseUI;
+    [SerializeField] private HealtUI _healtUI;
     
     [Header("Settings")]
     [SerializeField] public int healt = 3;
@@ -15,6 +16,7 @@ public class HealtController : MonoBehaviour
         if (_sethealtbool_1)
         {
             healt--;
+            _healtUI.healtDamage();
             if (healt <= 0)
             {
                 _winLoseUI.OnGameLose();
