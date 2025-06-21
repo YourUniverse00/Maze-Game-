@@ -10,7 +10,8 @@ public class WinLoseUI : MonoBehaviour
     [SerializeField] private GameObject _losePopup;
     [SerializeField] private CharacterController _characterController;
 
-    [SerializeField] private Button _tryAgain,_tryAgain2, _menu,_menu2;
+    [SerializeField] private Button _tryAgain,_tryAgain2, _menu,_menu2,_menu3;
+    [SerializeField] private TimerUI _timerUI;
 
     [Header("Settings")]
     [SerializeField] private float _animationDuraction;
@@ -24,18 +25,21 @@ public class WinLoseUI : MonoBehaviour
       _tryAgain2.onClick.AddListener(TryAgainButton);
         _menu.onClick.AddListener(MenuButton);
         _menu2.onClick.AddListener(MenuButton);
+        _menu3.onClick.AddListener(MenuButton);
         _winPopupTransform = _winPopup.GetComponent<RectTransform>();
         _losePopupTransform = _losePopup.GetComponent<RectTransform>();
     }
 
     public void OnGameWin()
     {
+        _timerUI.StopTimer();
         _characterController._ongamewinlose = false;
         _winPopup.SetActive(true);
         _winPopupTransform.DOScale(1f, _animationDuraction).SetEase(Ease.OutCirc);
     }
     public void OnGameLose()
     {
+        _timerUI.StopTimer();
         _characterController._ongamewinlose = false;
         _losePopup.SetActive(true);
         _losePopupTransform.DOScale(1f, _animationDuraction).SetEase(Ease.OutCirc);
