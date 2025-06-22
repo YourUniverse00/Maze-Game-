@@ -12,7 +12,6 @@ public class HealtBoost : MonoBehaviour,IBoostController
         Debug.Log("Healt Boost alındı");
         _healtUI.HealtBoost();
         _healtController.SetHealtBoost();
-
         Debug.Log(_healtController.healt);
         Destroy(this.gameObject);
 

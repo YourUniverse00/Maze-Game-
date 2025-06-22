@@ -1,10 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinLoseUI : MonoBehaviour
 {
+      public event Action OnSpeedBoost;
+
     [Header("Referances")]
     [SerializeField] private GameObject _winPopup;
     [SerializeField] private GameObject _losePopup;
@@ -32,10 +35,12 @@ public class WinLoseUI : MonoBehaviour
 
     public void OnGameWin()
     {
+        
         _timerUI.StopTimer();
         _characterController._ongamewinlose = false;
         _winPopup.SetActive(true);
         _winPopupTransform.DOScale(1f, _animationDuraction).SetEase(Ease.OutCirc);
+        OnSpeedBoost?.Invoke();
     }
     public void OnGameLose()
     {
@@ -48,7 +53,7 @@ public class WinLoseUI : MonoBehaviour
     private void TryAgainButton()
     {
         //Kod işlevli olması için mevcut olduğu level sahnesini yüklemeli 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     private void MenuButton()
     {
